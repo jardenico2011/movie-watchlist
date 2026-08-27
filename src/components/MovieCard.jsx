@@ -7,6 +7,7 @@ export default function MovieCard({
   rating,
   watched,
   onToggleWatched,
+  onDelete,
 }) {
   return (
     <div className="card bg-base-100 shadow-xl">
@@ -23,7 +24,9 @@ export default function MovieCard({
           {title}
 
           {rating >= 8 && (
-            <span className="badge badge-warning ml-2">Top Rated</span>
+            <span className="badge badge-warning ml-2">
+              Top Rated
+            </span>
           )}
         </h2>
 
@@ -35,7 +38,7 @@ export default function MovieCard({
           ⭐ {rating.toFixed(1)}
         </p>
 
-        <div className="card-actions justify-end mt-2">
+        <div className="card-actions justify-end mt-2 gap-2">
           <button
             type="button"
             onClick={() => onToggleWatched(id)}
@@ -46,6 +49,14 @@ export default function MovieCard({
             }
           >
             {watched ? "Watched ✓" : "Unwatched"}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onDelete(id)}
+            className="btn btn-error btn-sm"
+          >
+            🗑️ Delete
           </button>
         </div>
       </div>

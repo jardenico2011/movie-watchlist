@@ -16,6 +16,10 @@ export default function App() {
     );
   };
 
+  const handleDeleteMovie = (id) => {
+    setMovies(movies.filter((movie) => movie.id !== id));
+  };
+
   return (
     <Layout>
       <div className="mb-6">
@@ -28,6 +32,7 @@ export default function App() {
       <MovieList
         movies={movies}
         onToggleWatched={handleToggleWatched}
+        onDelete={handleDeleteMovie}
       />
     </Layout>
   );
