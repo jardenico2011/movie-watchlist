@@ -2,10 +2,12 @@ import { useState } from "react";
 import Layout from "./layouts/Layout";
 import MovieList from "./components/MovieList";
 import AddMovieForm from "./components/AddMovieForm";
+import FilterBar from "./components/FilterBar";
 import moviesData from "./data/movies";
 
 export default function App() {
   const [movies, setMovies] = useState(moviesData);
+  const [filter, setFilter] = useState("all");
 
   const handleToggleWatched = (id) => {
     setMovies(
@@ -25,6 +27,18 @@ export default function App() {
     setMovies([...movies, newMovie]);
   };
 
+  const visibleMovies = movies.filter((movie) => {
+    if (filter === "watched") {
+      return movie.watched;
+    }
+
+    if (filter === "unwatched") {
+      return !movie.watched;
+    }
+
+    return true;
+  });
+
   return (
     <Layout>
       <div className="mb-6">
@@ -37,8 +51,13 @@ export default function App() {
 
       <AddMovieForm onAddMovie={handleAddMovie} />
 
+      <FilterBar
+        currentFilter={filter}
+        onChangeFilter={setFilter}
+      />
+
       <MovieList
-        movies={movies}
+        movies={visibleMovies}
         onToggleWatched={handleToggleWatched}
         onDelete={handleDeleteMovie}
       />
