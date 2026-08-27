@@ -19,23 +19,27 @@ export default function MovieCard({
           alt={title}
           className="w-full h-80 object-cover"
           onError={(e) => {
-            e.target.src =
+            e.currentTarget.src =
               "https://via.placeholder.com/500x750?text=No+Poster";
           }}
         />
 
-        {/* Watched Badge */}
-        <div className="absolute top-3 right-3">
-          {watched ? (
-            <span className="badge badge-success font-semibold">
-              Watched ✓
-            </span>
-          ) : (
-            <span className="badge badge-neutral font-semibold">
-              Unwatched
-            </span>
-          )}
-        </div>
+        {/* Clickable Watched / Unwatched Badge */}
+        <button
+          type="button"
+          onClick={() => onToggleWatched(id)}
+          className="absolute top-3 right-3"
+        >
+          <span
+            className={
+              watched
+                ? "badge badge-success font-semibold"
+                : "badge badge-neutral font-semibold"
+            }
+          >
+            {watched ? "Watched ✓" : "Unwatched"}
+          </span>
+        </button>
       </figure>
 
       {/* Movie Information */}
@@ -56,26 +60,18 @@ export default function MovieCard({
 
         <div className="flex items-center gap-2 mt-1">
           <span className="text-lg">⭐</span>
+
           <span className="font-semibold">
             {Number(rating).toFixed(1)}
           </span>
-          <span className="text-sm opacity-60">/ 10</span>
+
+          <span className="text-sm opacity-60">
+            / 10
+          </span>
         </div>
 
-        {/* Buttons */}
+        {/* Action Buttons */}
         <div className="card-actions justify-end mt-4 gap-2">
-          <button
-            type="button"
-            onClick={() => onToggleWatched(id)}
-            className={
-              watched
-                ? "btn btn-success btn-sm"
-                : "btn btn-ghost btn-sm"
-            }
-          >
-            {watched ? "Watched ✓" : "Mark Watched"}
-          </button>
-
           <button
             type="button"
             onClick={() => onEdit(id)}
