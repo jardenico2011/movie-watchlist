@@ -3,6 +3,7 @@ import Layout from "./layouts/Layout";
 import MovieList from "./components/MovieList";
 import AddMovieForm from "./components/AddMovieForm";
 import FilterBar from "./components/FilterBar";
+import SummaryBar from "./components/SummaryBar";
 import moviesData from "./data/movies";
 
 export default function App() {
@@ -48,6 +49,8 @@ export default function App() {
           A collection of movies I've watched and want to watch.
         </p>
       </div>
+
+      <SummaryBar movies={movies} />
 
       <AddMovieForm onAddMovie={handleAddMovie} />
 
