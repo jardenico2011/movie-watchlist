@@ -1,8 +1,11 @@
+import { useState } from "react";
 import Layout from "./layouts/Layout";
 import MovieList from "./components/MovieList";
-import movies from "./data/movies";
+import moviesData from "./data/movies";
 
 export default function App() {
+  const [movies, setMovies] = useState(moviesData);
+
   return (
     <Layout>
       <div className="mb-6">
@@ -11,6 +14,7 @@ export default function App() {
           A collection of movies I've watched and want to watch.
         </p>
       </div>
+
       <MovieList movies={movies} />
     </Layout>
   );
