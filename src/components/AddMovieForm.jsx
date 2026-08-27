@@ -10,15 +10,15 @@ export default function AddMovieForm({ onAddMovie }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!title || !poster || !genre || !year) {
+    if (!title.trim() || !poster.trim() || !genre.trim() || !year) {
       return;
     }
 
     onAddMovie({
       id: Date.now(),
-      title,
-      poster,
-      genre,
+      title: title.trim(),
+      poster: poster.trim(),
+      genre: genre.trim(),
       year: Number(year),
       rating: Number(rating),
       watched: false,
@@ -36,12 +36,18 @@ export default function AddMovieForm({ onAddMovie }) {
       onSubmit={handleSubmit}
       className="card bg-base-100 shadow-xl p-6 mb-8"
     >
-      <h2 className="text-2xl font-bold mb-4">Add New Movie</h2>
+      <h2 className="text-2xl font-bold mb-4">
+        Add New Movie
+      </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        {/* Movie Title */}
         <div>
           <label className="label">
-            <span className="label-text">Movie Title</span>
+            <span className="label-text font-semibold">
+              Movie Title
+            </span>
           </label>
 
           <input
@@ -50,12 +56,16 @@ export default function AddMovieForm({ onAddMovie }) {
             className="input input-bordered w-full"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            required
           />
         </div>
 
+        {/* Poster URL */}
         <div>
           <label className="label">
-            <span className="label-text">Poster URL</span>
+            <span className="label-text font-semibold">
+              Poster URL
+            </span>
           </label>
 
           <input
@@ -64,12 +74,16 @@ export default function AddMovieForm({ onAddMovie }) {
             className="input input-bordered w-full"
             value={poster}
             onChange={(e) => setPoster(e.target.value)}
+            required
           />
         </div>
 
+        {/* Genre */}
         <div>
           <label className="label">
-            <span className="label-text">Genre</span>
+            <span className="label-text font-semibold">
+              Genre
+            </span>
           </label>
 
           <input
@@ -78,27 +92,35 @@ export default function AddMovieForm({ onAddMovie }) {
             className="input input-bordered w-full"
             value={genre}
             onChange={(e) => setGenre(e.target.value)}
+            required
           />
         </div>
 
+        {/* Year */}
         <div>
           <label className="label">
-            <span className="label-text">Year</span>
+            <span className="label-text font-semibold">
+              Release Year
+            </span>
           </label>
 
           <input
             type="number"
             placeholder="2026"
+            min="1900"
+            max="2100"
             className="input input-bordered w-full"
             value={year}
             onChange={(e) => setYear(e.target.value)}
+            required
           />
         </div>
 
+        {/* Rating */}
         <div className="md:col-span-2">
           <label className="label">
-            <span className="label-text">
-              Rating: {Number(rating).toFixed(1)}
+            <span className="label-text font-semibold">
+              Rating: {Number(rating).toFixed(1)} / 10
             </span>
           </label>
 
@@ -120,8 +142,11 @@ export default function AddMovieForm({ onAddMovie }) {
         </div>
       </div>
 
-      <button type="submit" className="btn btn-primary mt-6">
-        Add Movie
+      <button
+        type="submit"
+        className="btn btn-primary mt-6"
+      >
+        + Add Movie
       </button>
     </form>
   );

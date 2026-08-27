@@ -89,6 +89,16 @@ const movies = [
     rating: 8.5,
     watched: true,
   },
+  {
+    id: 10,
+    title: "Spider-Man: Brand New Day",
+    poster:
+      "https://image.tmdb.org/t/p/w500/9JCQtDCSpPR2ld55yNlEg1VwcQo.jpg",
+    year: 2026,
+    genre: "Action",
+    rating: 8.0,
+    watched: false,
+  },
 ];
 
 export default movies;
