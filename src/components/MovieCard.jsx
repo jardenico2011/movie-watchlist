@@ -1,3 +1,19 @@
+const fallbackPoster =
+  "data:image/svg+xml;charset=UTF-8," +
+  encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="500" height="750">
+      <rect width="500" height="750" fill="#e5e7eb"/>
+      <text x="250" y="375"
+        text-anchor="middle"
+        dominant-baseline="middle"
+        font-family="Arial, sans-serif"
+        font-size="32"
+        fill="#6b7280">
+        No Poster
+      </text>
+    </svg>
+  `);
+
 export default function MovieCard({
   id,
   title,
@@ -15,12 +31,12 @@ export default function MovieCard({
       {/* Movie Poster */}
       <figure className="relative">
         <img
-          src={poster}
+          src={poster || fallbackPoster}
           alt={title}
           className="w-full h-80 object-cover"
           onError={(e) => {
-            e.currentTarget.src =
-              "https://via.placeholder.com/500x750?text=No+Poster";
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = fallbackPoster;
           }}
         />
 
@@ -47,7 +63,7 @@ export default function MovieCard({
         <h2 className="card-title">
           {title}
 
-          {rating >= 8 && (
+          {Number(rating) >= 8 && (
             <span className="badge badge-warning ml-2">
               Top Rated
             </span>
@@ -92,3 +108,4 @@ export default function MovieCard({
     </div>
   );
 }
+
