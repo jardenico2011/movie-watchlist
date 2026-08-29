@@ -7,18 +7,34 @@ import SummaryBar from "./components/SummaryBar";
 import moviesData from "./data/movies";
 
 export default function App() {
+  // Task 1: Restore movies from localStorage
   const [movies, setMovies] = useState(() => {
     const savedMovies = localStorage.getItem("movies");
 
     return savedMovies ? JSON.parse(savedMovies) : moviesData;
   });
 
-  const [filter, setFilter] = useState("all");
+  // Task 3: Restore active filter from localStorage
+  const [filter, setFilter] = useState(() => {
+    return localStorage.getItem("filter") || "all";
+  });
 
+  // Task 1: Save movies whenever movies changes
   useEffect(() => {
     localStorage.setItem("movies", JSON.stringify(movies));
   }, [movies]);
 
+  // Task 2: Update browser tab title
+  useEffect(() => {
+    document.title = "Movie Watchlist (" + movies.length + ")";
+  }, [movies.length]);
+
+  // Task 3: Save active filter whenever it changes
+  useEffect(() => {
+    localStorage.setItem("filter", filter);
+  }, [filter]);
+
+  // Toggle watched status
   const handleToggleWatched = (id) => {
     setMovies(
       movies.map((movie) =>
@@ -29,14 +45,17 @@ export default function App() {
     );
   };
 
+  // Delete one movie
   const handleDeleteMovie = (id) => {
     setMovies(movies.filter((movie) => movie.id !== id));
   };
 
+  // Add new movie
   const handleAddMovie = (newMovie) => {
     setMovies([...movies, newMovie]);
   };
 
+  // Edit movie
   const handleEditMovie = (id) => {
     const movie = movies.find((movie) => movie.id === id);
 
@@ -73,6 +92,18 @@ export default function App() {
     );
   };
 
+  // Task 4: Clear all movies
+  const handleClearAll = () => {
+    if (
+      confirm(
+        "Clear your entire watchlist? This cannot be undone."
+      )
+    ) {
+      setMovies([]);
+    }
+  };
+
+  // Filter movies
   const visibleMovies = movies.filter((movie) => {
     if (filter === "watched") {
       return movie.watched;
@@ -97,7 +128,16 @@ export default function App() {
         </p>
       </div>
 
-      <SummaryBar movies={movies} />
+      <div className="flex items-center justify-between mb-4">
+        <SummaryBar movies={movies} />
+
+        <button
+          className="btn btn-error btn-sm"
+          onClick={handleClearAll}
+        >
+          Clear All
+        </button>
+      </div>
 
       <AddMovieForm onAddMovie={handleAddMovie} />
 
